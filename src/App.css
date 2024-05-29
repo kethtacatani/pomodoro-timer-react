@@ -1,10 +1,10 @@
-body{
+#body{
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   overflow: hidden;
-  --bg: rgb(17, 130, 25);
+  --bg: #821111;
   background-color: var(--bg);
 }
 

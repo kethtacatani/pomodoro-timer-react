@@ -21,6 +21,7 @@ function App() {
   const [isPaused, setIsPaused] = useState(false);
   const [startText, setStartText] = useState("Start");
   const [label, setLabel] = useState("Session");
+  const [bgColor, setBgColor] = useState("#118219")
 
   const restartTimer = () => {
     setHasStarted(false);
@@ -57,26 +58,21 @@ function App() {
             return !isPaused ? prevSeconds - 1 : prevSeconds - 0;
           } else {
             if (label === "Break"){
-              if(label==="Break"){
                 setLabel('Session')
-              }
               setSeconds(sessionTime * 60);
-    
+              setBgColor("#118219")
             }else if (label === "Session") {
-              
               setSeconds(breakTime * 60);
               setLabel("Break");
+              setBgColor("#821111")
             }
-            
             playAudio();
-
             return 0;
           }
         });
       }, 1000);
     }
 
-    // Clear interval on component unmount
     return () => {
       if (interval !== undefined) {
           clearInterval(interval);
@@ -87,7 +83,7 @@ function App() {
   const startTimer = () => {
     if (!hasStarted) {
       setHasStarted(true);
-      setSessionTime(seconds / 60);
+      setSessionTime(sessionTime);
       setStartText("Pause");
     } else if (startText === "Pause") {
       setIsPaused(true);
@@ -100,6 +96,8 @@ function App() {
   };
 
   const setTime = (type: string) => {
+    console.log("prev "+sessionTime);
+    
     if (hasStarted && !isPaused) {
       return;
     } else if (type === "breakDec") {
@@ -145,6 +143,7 @@ function App() {
 
   return (
     <>
+      <div id="body" style={{backgroundColor:bgColor, transition:"background-color 2s ease"}}>
       <div className="container">
         <p style={{ fontSize: "30px", fontWeight: "bold" }}>Pomodoro Timer</p>
         <div className="length-container">
@@ -191,10 +190,10 @@ function App() {
         </p>
         <p id="time-left">{formattedTime}</p>
         <div className="button-controls">
-          <button id="start_stop" className="play-reset" onClick={startTimer}>
+          <button id="start_stop" className="play-reset" onClick={startTimer} style={{color:bgColor}}>
             {startText}
           </button>
-          <button id="reset" className="play-reset" onClick={restartTimer}>
+          <button id="reset" className="play-reset" onClick={restartTimer} style={{color:bgColor}}>
             Reset
           </button>
         </div>
@@ -202,6 +201,7 @@ function App() {
           id="beep"
           src="https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav"
         ></audio>
+      </div>
       </div>
     </>
   );
