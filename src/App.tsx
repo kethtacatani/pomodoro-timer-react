@@ -16,7 +16,6 @@ function App() {
   const [hasStarted, setHasStarted] = useState(false);
   const [formattedTime, setFormattedTime] = useState(formatTime(seconds));
   const [sessionTime, setSessionTime] = useState(25);
-  const [breakSeconds, setBreakSeconds] = useState(300);
   const [breakTime, setBreakTime] = useState(5);
   const [isPaused, setIsPaused] = useState(false);
   const [startText, setStartText] = useState("Start");
@@ -104,7 +103,6 @@ function App() {
       if (breakTime > 1) {
         setBreakTime((prevBreakTime) => {
           const newBreakTime = prevBreakTime - 1;
-          setBreakSeconds(newBreakTime * 60);
           return newBreakTime;
         });
       }
@@ -112,7 +110,6 @@ function App() {
       if (breakTime < 60) {
         setBreakTime((prevBreakTime) => {
           const newBreakTime = prevBreakTime + 1;
-          setBreakSeconds(newBreakTime * 60);
           return newBreakTime;
         });
       }
